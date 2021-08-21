@@ -1,0 +1,12 @@
+.MuiDataGrid-main{
+    box-sizing: border-box !important;
+    width: 100%;
+}
+
+.MuiDataGrid-columnSeparator{
+    display: none !important;
+}
+
+.MuiDataGrid-columnHeader{
+    background-color: var(--lightColor);
+}

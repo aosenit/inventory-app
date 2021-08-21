@@ -1,23 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
+import Group from './pages/group/Group';
+import Inventory from './pages/inventory/Inventory';
+import Shop from './pages/shop/Shop';
+import Users from './pages/users/Users';
+import Dashboard from './pages/dashboard/Dashboard';
+import './app.css';
+import Purchase from './pages/purchase/Purchase';
+import LoginPage from './pages/LoginPage';
+import SelectShop from './pages/SelectShop';
+import CreateUser from './pages/createUser/CreateUser';
 
 function App() {
+  const user = true;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            {user ? <Dashboard /> : <Redirect to="/login" />}
+          </Route>
+          <Route path="/login">
+            {!user ? <LoginPage /> : <Redirect to="/" />}
+          </Route>
+          <Route path="/group">
+            <Group />
+          </Route>
+          <Route path="/inventory">
+            <Inventory />
+          </Route>
+          <Route path="/shop">
+            <Shop />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+          <Route path="/purchases">
+            <Purchase />
+          </Route>
+          <Route path="/selectShop">
+            <SelectShop />
+          </Route>
+
+          <Route path="/create-user">
+            <CreateUser />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

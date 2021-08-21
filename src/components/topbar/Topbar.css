@@ -1,0 +1,36 @@
+.topbarRight{
+    display: flex;
+    align-items: center;
+}
+
+.topbarButton{
+    color: var(--primaryColor) !important;
+    background-color: var(--btnColor) !important;
+   
+}
+
+.topbarSelect{
+    margin-left: 20px;
+    width: 150px;
+    display: flex;
+    position: relative;
+    background-color: var(--lightColor);
+    border-radius: 30px;
+    overflow: hidden;
+  
+}
+
+.selectAvatar{
+    position: relative;
+    
+    z-index: 2;
+   
+}
+.topbarSelect > select{
+    flex: 1;
+    padding-left: 20px;
+    outline: none;
+    background-color: inherit;
+    border: none;
+   
+}

@@ -1,0 +1,90 @@
+.inventory {
+  flex: 4;
+}
+
+
+.listInventory {
+  display: flex;
+  align-items: center;
+}
+
+.listImg {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.listEdit{
+    color: #4451C2;
+    cursor: pointer;
+}
+
+.listVisible{
+    color: #6FE6C9;
+    cursor: pointer;
+}
+
+.listDelete{
+    color: red;
+    cursor: pointer;
+}
+
+.export{
+    margin-left: 20px !important;
+    background-color: var(--lightGreen) !important;
+    color: rgba(31, 135, 66, 1) !important;
+}
+
+.content__leftTop{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+    padding: 0 40px;
+}
+
+.content__leftTop > h4{
+    cursor: pointer;
+}
+
+.content__rightTop{
+    display: flex;
+    align-items: center;
+}
+
+.content__searchBar{
+    height: 40px;
+    background-color: var(--lightColor);
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    border-radius:10px;
+    width: 250px;
+}
+
+.search-icon{
+    color: rgb(124, 123, 123);
+    font-size: 1.5rem !important;
+}
+
+.content__SearchBarInput{
+    outline: none;
+    background-color: inherit;
+    border: none;
+    width: 100%;
+    padding-left: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.content__searchBar > button{
+    display: none;
+}
+
+
+.contentTable{
+   height: 80%; 
+   padding: 35px;
+}

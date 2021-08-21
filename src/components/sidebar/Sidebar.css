@@ -1,0 +1,45 @@
+.sidebar{
+    grid-area: side;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    background-color: var(--primaryColor);
+    position: relative;
+    height: calc(100vh - 50px);
+    background-color: rgb(251, 251, 255);
+    position: sticky;
+    top: 50px;
+    position: relative;
+}
+
+.sidebar::before{
+    content: '';
+    border: solid 1px var(--lightColor);
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 100px;
+}
+
+.sidebar__logo{
+    height: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar__logo > h4{
+    margin-left: 40px;
+    cursor: pointer;
+}
+
+.sidebar__nav{
+    margin-top: 20px;
+    height: calc(100vh - 100px);
+    color: var(--grayColor);
+    transition: .5s ease color;
+   
+}
+
+.selected{
+    color: black;
+}
