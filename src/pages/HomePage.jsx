@@ -14,7 +14,7 @@ const HomePage = () => {
     return (
         <div className="home">
             <div className="homeTexts">
-                <h1>Welcome to the Inventory App</h1>
+                <h1>THE INVENTORY APP</h1>
                   <div className="homeRoutes">
                   <Link className="homeLink"  to='/login'>Login</Link>
                   <Link className="homeLink" to='/create-user'>Sign up</Link> 
