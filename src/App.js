@@ -4,7 +4,7 @@ import Inventory from "./pages/inventory/Inventory";
 import Shop from "./pages/shop/Shop";
 import Users from "./pages/users/Users";
 import Dashboard from "./pages/dashboard/Dashboard";
-import "./app.css";
+import "./App.css";
 import Purchase from "./pages/purchase/Purchase";
 import LoginPage from "./pages/LoginPage";
 import SelectShop from "./pages/SelectShop";
