@@ -1,42 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import './Purchase.css';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import { purchaseRows } from '../../DemoData';
-import { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
-import Button from '@material-ui/core/Button';
+import PurchaseModal from '../../modals/PurchaseModal';
+import { publicRequest } from '../../apiRequests';
 
 
 function Purchase() {
   const [data, setData] = useState(purchaseRows);
+  const [word, setWord] = useState('');
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  useEffect(() => {
+    const getPurchase = async() => {
+        
+     try {
+      const res =  await publicRequest.get(`/app/inventory?page=1&keyword=${word}`)
+       const purchase = (res.data.results)
+       setData(purchase)
+       
+     } catch (error) {
+  
+       console.log(error.response)
+     } 
+ 
+    }
+ 
+    getPurchase()
+   }, [word])
+
+ 
 
   const columns = [
     {
-      field: 'item',
-      headerName: 'Item',
-      flex: 1,
+      field: 'id',
+      headerName: 'ID',
+      width: 150 ,
     },
     {
-      field: 'quantity',
-      headerName: 'Quantity',
-      flex: .5,
+      field: 'created_by',
+      headerName: 'Created By',
+      flex: 1,
+      renderCell: (params) => <>{params.value !=null ? params.value.fullname : "Adedoyin"}</>
     },
     { field: 'price', headerName: 'Price', flex: 1 },
     {
-      field: 'shop',
-      headerName: 'Shop',
+      field: 'total',
+      headerName: 'Total Item',
       flex: 1,
+      renderCell: (params) => <>{params.value !=null ? params.value : 0}</>
     },
     {
-      field: 'purchaseMade',
-      headerName: 'Purchase Made',
+      field: 'created_at',
+      headerName: 'Created On',
       flex: 1,
+      renderCell: (params) => <>{params.value !=null ? (params.value) : "28/5/2021"}</>
     },
 
     {
@@ -46,7 +66,8 @@ function Purchase() {
       renderCell: (params) => {
         return (
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Button
+            <PurchaseModal />
+            {/* <Button
               variant="contained"
               style={{
                 color: 'white',
@@ -55,7 +76,7 @@ function Purchase() {
               }}
             >
               View Receipt
-            </Button>
+            </Button> */}
           </div>
         );
       },
@@ -75,15 +96,11 @@ function Purchase() {
                 type="text"
                 className="content__SearchBarInput"
                 placeholder="Search"
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
               />
               <button type="submit">submit</button>
             </form>
-
-            <div>
-              <Button variant="contained" color="primary" className="export">
-                Export
-              </Button>
-            </div>
           </div>
         </div>
         <div className="contentTable">
@@ -94,8 +111,7 @@ function Purchase() {
             checkboxSelection={false}
             headerHeight={70}
             className="editTable"
-            autoHeight={true}
-            
+            autoHeight={true} 
           />
         </div>
       </div>

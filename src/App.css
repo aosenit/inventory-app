@@ -1,6 +1,4 @@
-/* .app{
-    width: 100%;
-} */
+
 .layout{
     width: 100%;
     background-color: var(--lightColor);
@@ -9,6 +7,7 @@
                            "side  main";
   grid-template-rows: 100px 1fr;
   grid-template-columns: 300px 1fr;
+
   
 }
 
@@ -42,4 +41,73 @@
     background-color:var(--lightColor);
     margin-top: 20px;
     font-size: 14px;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeader, .MuiDataGrid-root .MuiDataGrid-cell{
+    padding: 0 20px !important;
+}
+
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle{
+    font-weight: bold !important;
+}
+
+.cardHead{
+    text-align: center;
+}
+.cardHead > h3{
+    color: blue;
+    margin-bottom: 10px;
+    word-spacing: .5rem;
+}
+.cardHead > h5{
+    margin-top: 10px;
+}
+
+.cardBody_top {
+    display: flex;
+    justify-content: space-between;
+    font-size: .8rem;
+}
+
+.cardBody_top span {
+    display: block;
+    color: black;
+    font-size: .8rem;
+    margin: 5px 0 10px;
+}
+
+.cardBody_Content{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    color: gray;
+    margin-bottom: 10px;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+}
+
+.cardBody_Content span{
+    display: block;
+    color: black;
+}
+
+.cardBody_footer{
+    display: flex;
+    font-size: .8rem;
+    flex-direction: column;
+}
+
+.cardBody_footer >h4{
+    align-self: flex-end;
+    margin-bottom: 20px;
+}
+.cardBody_footer >h5{
+    align-self: center;
+    font-size: .9rem;
+    margin-bottom: 10px;
+}
+
+.cardBtn{
+    width: 10rem !important;
+    margin-top: 10px !important;
 }

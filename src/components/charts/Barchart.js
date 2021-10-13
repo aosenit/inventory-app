@@ -1,80 +1,99 @@
-import React, { PureComponent } from 'react';
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
+import { Box, CircularProgress } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import { Bar } from "react-chartjs-2";
+import { userRequest } from "../../apiRequests";
+import moment from "moment";
 
-const data = [
-  {
-    name: 'Sep',
-    shopA: 800,
-    shopB: 2400,
-    shopC: 2400,
-  },
-  {
-    name: 'Oct',
-    shopA: 3000,
-    shopB: 1398,
-    shopC: 2210,
-  },
-  {
-    name: 'Nov',
-    shopA: 2000,
-    shopB: 9800,
-    shopC: 2290,
-  },
-  {
-    name: 'Dec',
-    shopA: 2780,
-    shopB: 3908,
-    shopC: 2000,
-  },
-  {
-    name: 'Jan',
-    shopA: 1890,
-    shopB: 4800,
-    shopC: 2181,
-  },
-  {
-    name: 'Feb',
-    shopA: 2390,
-    shopB: 3800,
-    shopC: 2500,
-  },
-];
+const Barchart = () => {
+  const [chartData, setChartData] = useState({});
+  const [loading, setLoading] = useState(false);
 
-export default class Barchart extends PureComponent {
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="80%">
-        <BarChart
-          width={500}
-          height={100}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="shopA" fill="#8884d8" />
-          <Bar dataKey="shopB" fill="#82ca9d" />
-          <Bar dataKey="shopA" fill="orange" />
-        </BarChart>
-      </ResponsiveContainer>
-    );
-  }
-}
+  const Chart = () => {
+    let amount = [];
+    let month = [];
+    let name = [];
+    setLoading(true);
+    userRequest
+      .get("/app/sales-by-shop?monthly=true")
+      .then((res) => {
+        for (const dataObj of res.data) {
+          amount.push(parseInt(dataObj.amount_total));
+          month.push(moment(new Date(dataObj.month)).format("MMM"));
+          name.push(dataObj.name);
+        }
+        setLoading(false);
+        setChartData({
+          labels: month,
+          datasets: [
+            {
+              label: "amount",
+              data: amount,
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+              ],
+              borderWidth: 1,
+            },
+
+            {
+              label: "name",
+              data: name,
+              backgroundColor: [
+                "rgba(54, 162, 235, 0.2)",
+                "rgba(255, 206, 86, 0.2)",
+                "rgba(75, 192, 192, 0.2)",
+              ],
+              borderColor: [
+                "rgba(255, 99, 132, 1)",
+                "rgba(54, 162, 235, 1)",
+                "rgba(255, 206, 86, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    Chart();
+  }, []);
+  return (
+    <>
+      {loading ? (
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : (
+        <div className="bar">
+          <div>
+            <Bar
+              data={chartData}
+              options={{
+                responsive: true,
+
+                scales: {
+                  yAxes: {
+                    ticks: {
+                      beginAtZero: true,
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default Barchart;

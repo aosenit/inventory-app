@@ -8,6 +8,7 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ShopIcon from '@material-ui/icons/Shop';
 import Navbar from '../navbar/Navbar';
+import UserActivity from '../../pages/userActivity/UserActivity';
 
 function Sidebar() {
   return (
@@ -17,7 +18,7 @@ function Sidebar() {
         <h4>INVENTORY</h4>
       </div>
       <div className="sidebar__nav">
-        <NavLink to="/" exact activeClassName="selected">
+        <NavLink to="/dashboard" exact activeClassName="selected">
           <Navbar logo={<DashboardIcon />} option={'Dashboard'} />
         </NavLink>
 
@@ -40,6 +41,12 @@ function Sidebar() {
         <NavLink exact to="/shop" activeClassName="selected">
           <Navbar logo={<ShopIcon />} option={'Shop'} />
         </NavLink>
+
+        <NavLink exact to="/user-activity" activeClassName="selected">
+          <Navbar logo="#" option={'UserActivity'} />
+        </NavLink>
+
+        
       </div>
     </div>
   );

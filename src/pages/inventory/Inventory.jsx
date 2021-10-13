@@ -7,16 +7,11 @@ import InventoryManager from '../../components/inventoryManager/InventoryManager
 
 function Inventory() {
  
-  let isInvoice = false
   return (
     <div className="inventory layout">
-      <Topbar isHeaderbtn />
+      <Topbar />
       <Sidebar />
-      {!isInvoice ? (
-        <InventoryManager isInvoice={isInvoice} />
-      ) : (
-        <InventoryInvoice isInvoice={isInvoice} />
-      )}
+      <InventoryManager  />
     </div>
   );
 }

@@ -1,6 +1,11 @@
+.topbar{
+    justify-content: right !important;
+}
+
 .topbarRight{
     display: flex;
     align-items: center;
+    
 }
 
 .topbarButton{
@@ -11,26 +16,37 @@
 
 .topbarSelect{
     margin-left: 20px;
-    width: 150px;
+    width: 200px;
     display: flex;
     position: relative;
     background-color: var(--lightColor);
     border-radius: 30px;
-    overflow: hidden;
+   
   
 }
 
 .selectAvatar{
     position: relative;
-    
     z-index: 2;
    
 }
-.topbarSelect > select{
+.topbarSelect button{
     flex: 1;
-    padding-left: 20px;
+    padding:15px 20px 0;
     outline: none;
     background-color: inherit;
     border: none;
+    cursor: pointer;
    
+}
+.logoutBox{
+    position: absolute;
+    border: 1px solid  var(--lightColor);
+    padding: 5px 20px;
+    cursor: pointer;
+    z-index: 100;
+    bottom: -28px;
+    font-size: .8rem;
+    left: 50%;
+    transform: translateX(-50%);
 }

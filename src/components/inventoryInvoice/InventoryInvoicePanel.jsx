@@ -1,19 +1,52 @@
-import React from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useEffect } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import { inventorypanelRows } from '../../DemoData';
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
+import { userRequest } from '../../apiRequests';
+import { useDispatch } from 'react-redux';
+import { receipt } from '../../redux/userSlice';
 
-function InventoryInvoicePanel() {
+function InventoryInvoicePanel({ word}) {
+  
+  const dispatch = useDispatch()
   const [data, setData] = useState(inventorypanelRows);
+ 
+  
+  useEffect(() => {
+    const getNewInvoice = async() => {   
+     try {
+       const res =  await userRequest.get(`/app/inventory?page=1&keyword=${word}`)
+       const newInvoice = (res.data.results)
+       setData(newInvoice) 
+       
+      
+       
+     } catch (error) {
+  
+       console.log(error.response)
+     } 
+ 
+    }
+ 
+    getNewInvoice()
+   }, [ word])
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+
+   const handleAdd = (id) => {
+    const reciept = data.filter((item) => item.id === id);
+    const recieptData = {
+      name: reciept[0].name,
+      price: reciept[0].price
+    }
+    dispatch(receipt(recieptData))
+    
+   }
+
 
   const columns = [
     {
-      field: 'itemcode',
+      field: 'code',
       headerName: 'Item Code',
       flex: 1,
     },
@@ -29,7 +62,7 @@ function InventoryInvoicePanel() {
         );
       },
     },
-    { field: 'itemname', headerName: 'Item Name', flex: 1 },
+    { field: 'name', headerName: 'Item Name', flex: 1 },
     {
       field: 'price',
       headerName: 'Price',
@@ -50,6 +83,7 @@ function InventoryInvoicePanel() {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Button
               variant="contained"
+              onClick={() => handleAdd(params.row.id)}
               style={{
                 color: 'white',
                 color: 'var(--darkGreen)',

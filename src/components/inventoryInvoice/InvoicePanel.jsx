@@ -1,17 +1,31 @@
-import React from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useEffect } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import { invoiceRows } from '../../DemoData';
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ClearIcon from '@material-ui/icons/Clear';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearReceipt } from '../../redux/userSlice';
 
 function InvoicePanel() {
   const [data, setData] = useState(invoiceRows);
+  const {invoiceDetail} = useSelector(state => state.user)
+  const dispatch = useDispatch()
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
+
+  const handleClear = () => {
+      dispatch(clearReceipt())
+  }
+
+  useEffect(() => {
+    // console.log(invoiceDetail, invoiceRows)
+    // setData(invoiceDetail)
+    
+  }, [clearReceipt()])
 
   const columns = [
     {
@@ -22,12 +36,12 @@ function InvoicePanel() {
     {
       field: 'unitprice',
       headerName: 'Unit Price',
-      flex: 1.5,
+      flex: 1,
     },
     {
       field: 'qty',
       headerName: 'Qty',
-      flex: 1,
+      flex: .5,
     },
     {
       field: 'amount',
@@ -72,7 +86,15 @@ function InvoicePanel() {
           <h4>10/07/2021</h4>
         </div>
         <div className="invoiceFooter__right">
-          <Button variant='contained' className='topbarButton' style={{fontSize:'.7rem'}}>Print & Save</Button>
+          <Button variant='contained' className='topbarButton' style={{fontSize:'.5rem'}}>Print & Save</Button>
+          <Button className='deleteReceipt' onClick={handleClear}
+          style={{
+                  backgroundColor:'red',
+                  color:"white",
+                  fontSize:'.5rem', 
+                  marginLeft: "5px"
+                }}
+                >Clear</Button>
         </div>
       </Paper>
     </div>

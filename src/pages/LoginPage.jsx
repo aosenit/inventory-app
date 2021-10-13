@@ -1,48 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import StopIcon from '@material-ui/icons/Stop';
-import axios from 'axios';
-import requests from '../apiCalls/api';
+import { useForm } from "react-hook-form";
+import { publicRequest } from '../apiRequests';
+import { useSelector } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
+
 
 
 
 function LoginPage() {
-
-  const [name, setName] = useState('')
-  const [password, setPassword] = useState('');
-
- const handleLogin = (e) => {
-   e.preventDefault()
-   const loginInfo = {
-     name,
-     password
-   }
-
-   console.log(loginInfo)
- }
+  const {publicUser} = useSelector(state => state.user)
+  let history = useHistory();
+  const { register, handleSubmit} = useForm();
+  const [loading, setLoading] = useState(false)
   
-    useEffect(() => {
-      // const getWhatever = async () => {
-      //   try {
-      //     const request = await axios.post(
-      //       'https://api.devtot.com:2087/user/login',
-      //       {
-      //         headers: {
-      //           token:
-      //             'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Mjc1NjQyMTIsInVzZXJfaWQiOjF9.7RsaqGiDhZ2qPPdp2z7nShazQZ8HxEabkefq8VfCD5I ',
-      //         },
-      //       }
-      //     );
+  
+  const handleLogin =  async (data) => {
 
-      //     console.log(request);
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // };
-      // getWhatever();
-    }, []);
+    if(data.email === publicUser.email && data.password === publicUser.password){
+      setLoading(true)
+            try {
+              const response = await publicRequest.post("user/login", {email:'public@gmail.com', password:"public1234"});
+
+            localStorage.setItem("userToken", JSON.stringify(response.data.access))
+            
+            history.push("/loading");
+              window.location.reload();
+            
+              
+            } catch (error) {
+              setLoading(false)
+              console.log(error.response)
+            }
+    } else{
+      alert('please enter correct password and email')
+      return
+    }
+    
+  }
+
+
+
 
 
     return (
@@ -72,21 +74,25 @@ function LoginPage() {
             }}
           >
             <h4>Sign In</h4>
-            <Button size="medium">
+            <Link to="/">
+              <Button size="medium">
               <StopIcon style={{ color: '#00E85D', fontSize: '30px' }} />
               <h4>Inventory</h4>
             </Button>
+            </Link>
+            
           </div>
 
           <form
             className="loginForm"
+            onSubmit={handleSubmit(handleLogin)}
             style={{
               display: 'flex',
               width: '100%',
               flexDirection: 'column',
             }}
           >
-            <h5>Name</h5>
+            <h5>Email</h5>
             <TextField
               style={{
                 width: '100%',
@@ -94,9 +100,10 @@ function LoginPage() {
                 marginBottom: '20px',
               }}
               id="outlined-basic"
-              value={name}
+              type="email"
+              
               variant="outlined"
-              onChange={(e) => setName(e.target.value)}
+              {...register('email', { required: true })}
             />
 
             <h5>Password</h5>
@@ -106,12 +113,11 @@ function LoginPage() {
                 marginTop: '10px',
                 marginBottom: '20px',
               }}
-              id="outlined-basic"
-              value={password}
+              id="outlined-basic" 
+              {...register('password', { required: true })}
               variant="outlined"
               type="password"
               autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button
@@ -124,9 +130,9 @@ function LoginPage() {
               }}
               variant="contained"
               color="secondary"
-              onClick={handleLogin}
+              type='submit'
             >
-              Login
+             {loading ? (<><h4 style={{paddingRight: '20px'}}>Logging</h4> <CircularProgress  color="inherit" /></>) : <h4>Login</h4> } 
             </Button>
 
             <p

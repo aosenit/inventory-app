@@ -1,38 +1,67 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import './Group.css';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { groupRows } from '../../DemoData';
 import { useState } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import SearchIcon from '@material-ui/icons/Search';
-import MyModal from '../../Modal';
+import { userRequest } from '../../apiRequests';
+import GroupModal from '../../modals/GroupModal';
+
 
 function Group() {
   const [data, setData] = useState(groupRows);
+  const [word, setWord] = useState('');
+
+
+  useEffect(() => {
+   const getGroup = async() => {
+       
+    try {
+      const res =  await userRequest.get(`/app/group?page=1&keyword=${word}`)
+      // console.log( res.data.results)
+      const group = (res.data.results)
+      setData(group)
+      
+    } catch (error) {
+ 
+      console.log(error.response)
+    } 
+
+   }
+
+   getGroup()
+  }, [word])
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
 
   const columns = [
-    // { field: 'id', headerName: 'ID', width: 150 },
+    { field: 'id', headerName: 'ID', width: 150 },
     {
-      field: 'username',
+      field: 'name',
       headerName: 'Name',
       flex: 1,
     },
-    { field: 'belongs', headerName: 'Belongs To(Another Group)', flex: 1 },
+    { field: 'belongs_to', headerName: 'Belongs To(Another Group)', flex: 1, 
+    renderCell: (params) => <>{"Null"}</> },
     {
-      field: 'createdOn',
+      field: 'created_at',
       headerName: 'Created On',
       flex: 1,
     },
     {
-      field: 'totalItems',
+      field: 'created_by',
+      headerName: 'Created By',
+      flex: 1,
+      renderCell: (params) => <>{params.value ? (params.value.fullname) : ""}</>
+    },
+    {
+      field: 'total_items',
       headerName: 'Total Items',
       flex: 1,
     },
@@ -50,7 +79,6 @@ function Group() {
               className="listDelete"
               onClick={() => handleDelete(params.row.id)}
             />
-            <VisibilityIcon className="listVisible" />
           </div>
         );
       },
@@ -70,16 +98,12 @@ function Group() {
                 type="text"
                 className="content__SearchBarInput"
                 placeholder="Search"
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
               />
               <button type="submit">submit</button>
             </form>
-            <MyModal
-              modalSelectName="Select a Group"
-              modalButtonName="Add Group"
-              modalTitle="Add Group"
-              modalSelectTitle="Belongs To"
-              isSelectPresent
-            />
+            <GroupModal />
           </div>
         </div>
 
@@ -89,7 +113,7 @@ function Group() {
             disableSelectionOnClick
             columns={columns}
             pageSize={10}
-            checkboxSelection
+            checkboxSelection={false}
             autoHeight={true}
           />
         </div>

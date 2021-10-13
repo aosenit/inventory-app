@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import './Shop.css';
-import { DataGrid } from '@material-ui/data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { shopRows } from '../../DemoData';
 import { useState } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import SearchIcon from '@material-ui/icons/Search';
-import MyModal from '../../Modal';
+import { userRequest } from '../../apiRequests';
+import ShopModal from '../../modals/ShopModal';
 
 function Shop() {
   const [data, setData] = useState(shopRows);
+  const [word, setWord] = useState('');
+
+  useEffect(() => {
+    const getShops = async() => {
+        
+     try {
+       const res =  await userRequest.get(`/app/shop?page=1&keyword=${word}`)
+       const shops = (res.data.results)
+       setData(shops)
+       
+     } catch (error) {
+  
+       console.log(error.response)
+     } 
+ 
+    }
+ 
+    getShops()
+   }, [word])
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -21,20 +40,23 @@ function Shop() {
   const columns = [
     // { field: 'id', headerName: 'ID', width: 150 },
     {
-      field: 'username',
+      field: 'name',
       headerName: 'Name',
       flex: 1,
     },
-    { field: 'created', headerName: 'Created On', flex: 1 },
+    { field: 'created_by', headerName: 'Created By', flex: 1, renderCell: (params) => <>{params?.value?.fullname}</>},
+    { field: 'created_at', headerName: 'Created On', flex: 1 },
     {
-      field: 'totalSalesPrice',
+      field: 'amount_total',
       headerName: 'Total Sales(Price)',
       flex: 1,
-    },
+      renderCell: (params) => <>{params.value != null ? params.value : "Null"}</>},
+
     {
-      field: 'totalSalesCount',
+      field: 'count_total',
       headerName: 'Total Sales(Count)',
       flex: 1,
+      renderCell: (params) => <>{params.value != null ? params.value : "Null"}</>
     },
     {
       field: 'action',
@@ -50,7 +72,6 @@ function Shop() {
               className="listDelete"
               onClick={() => handleDelete(params.row.id)}
             />
-            <VisibilityIcon className="listVisible" />
           </div>
         );
       },
@@ -70,14 +91,12 @@ function Shop() {
                 type="text"
                 className="content__SearchBarInput"
                 placeholder="Search"
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
               />
               <button type="submit">submit</button>
             </form>
-            <MyModal
-              modalSelectName="Select a User Role"
-              modalButtonName="Add Shop"
-              modalTitle="Add Shop"
-            />
+            <ShopModal />
           </div>
         </div>
 
@@ -87,8 +106,7 @@ function Shop() {
             disableSelectionOnClick
             columns={columns}
             pageSize={10}
-            checkboxSelection
-            autoHeight={true}
+            checkboxSelection={false}
           />
         </div>
       </div>

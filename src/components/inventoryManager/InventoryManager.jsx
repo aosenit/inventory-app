@@ -1,18 +1,38 @@
-import React from 'react'
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useEffect } from 'react'
+import { DataGrid } from '@mui/x-data-grid';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { inventoryRows } from '../../DemoData';
 import { useState } from 'react';
 import CreateIcon from '@material-ui/icons/Create';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
-import MyModal from '../../Modal';
+import { userRequest } from '../../apiRequests';
+import InventoryModal from '../../modals/InventoryModal';
 
-function InventoryManager({isInvoice}) {
+function InventoryManager() {
+  const [data, setData] = useState(inventoryRows);
+  const [word, setWord] = useState('');
+
+  useEffect(() => {
+   const getInventory = async() => {
+       
+    try {
+      const res =  await userRequest.get(`/app/inventory?page=1&keyword=${word}`)
+      const inventorydata = (res.data.results)
+      setData(inventorydata)
+      
+    } catch (error) {
+ 
+      console.log(error.response)
+    } 
+
+   }
+
+   getInventory()
+  }, [word])
    
 
-     const [data, setData] = useState(inventoryRows);
+    
     
 
      const handleDelete = (id) => {
@@ -21,7 +41,7 @@ function InventoryManager({isInvoice}) {
 
      const columns = [
        {
-         field: 'itemcode',
+         field: 'code',
          headerName: 'Item Code',
          flex: 1,
        },
@@ -37,27 +57,36 @@ function InventoryManager({isInvoice}) {
            );
          },
        },
-       { field: 'itemname', headerName: 'Item Name', flex: 1 },
-       {
-         field: 'itemgroup',
-         headerName: 'Item Group',
-         flex: 1,
-       },
+       { field: 'name', headerName: 'Item Name', flex: 1 },
+    
        {
          field: 'price',
          headerName: 'Price',
          flex: 1,
        },
        {
+        field: 'total',
+        headerName: 'Total',
+        flex: 1,
+      },
+       {
          field: 'remaining',
          headerName: 'Remaining',
          flex: 1,
        },
        {
-         field: 'addOn',
+         field: 'created_at',
          headerName: 'Added On',
          flex: 1,
        },
+
+       {
+        field: 'added_by',
+        headerName: 'Added By',
+        flex: 1,
+        renderCell: (params) => <>{params.value !=null ? params.value.fullname : "ade"}</>
+      },
+
        {
          field: 'action',
          headerName: 'Action',
@@ -72,7 +101,6 @@ function InventoryManager({isInvoice}) {
                  className="listDelete"
                  onClick={() => handleDelete(params.row.id)}
                />
-               <VisibilityIcon className="listVisible" />
              </div>
            );
          },
@@ -89,6 +117,8 @@ function InventoryManager({isInvoice}) {
               <input
                 type="text"
                 className="content__SearchBarInput"
+                value={word}
+                onChange={(e) => setWord(e.target.value)}
                 placeholder="Search"
               />
               <button type="submit">submit</button>
@@ -96,18 +126,10 @@ function InventoryManager({isInvoice}) {
 
             <div>
               <Button variant="contained" color="primary" className="export">
-                Export
+               Add Excel
               </Button>
             </div>
-            <MyModal
-              modalSelectName="Select a group"
-              modalSelectTitle="Group or Category"
-              modalButtonName="Add Item"
-              modalTitle="Add Item"
-              isImagePresent
-              isSelectPresent
-              isCountPresent
-            />
+            <InventoryModal />
           </div>
         </div>
         <div className="contentTable">
@@ -116,7 +138,7 @@ function InventoryManager({isInvoice}) {
             disableSelectionOnClick
             columns={columns}
             pageSize={10}
-            checkboxSelection={true}
+            checkboxSelection={false}
             headerHeight={80}
             className="editTable"
             autoHeight={true}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import './Users.css';
@@ -6,14 +6,32 @@ import { DataGrid } from '@material-ui/data-grid';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { userRows } from '../../DemoData';
 import { useState } from 'react';
-import CreateIcon from '@material-ui/icons/Create';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import SearchIcon from '@material-ui/icons/Search';
-import MyModal from '../../Modal';
+import {  userRequest } from '../../apiRequests';
+import UsersModal from '../../modals/UsersModal';
 
 function Users() {
 
       const [data, setData] = useState(userRows);
+      const [word, setWord] = useState('');
+
+      useEffect(() => {
+        const getUsers = async() => {
+            
+         try {
+           const res =  await userRequest.get(`/user/users?page=1&keyword=${word}`)
+           const users = (res.data.results)
+           setData(users)
+           
+         } catch (error) {
+      
+           console.log(error.response)
+         } 
+     
+        }
+     
+        getUsers()
+       }, [word])
 
       const handleDelete = (id) => {
         setData(data.filter((item) => item.id !== id));
@@ -22,28 +40,29 @@ function Users() {
       const columns = [
         // { field: 'id', headerName: 'ID', width: 150 },
         {
-          field: 'user',
+          field: 'fullname',
           headerName: 'Name',
           flex: 1,
           renderCell: (params) => {
             return (
               <div className="userListUser">
                 <img className="userListImg" src={params.row.avatar} alt="" />
-                {params.row.username}
+                {params.row.fullname}
               </div>
             );
           },
         },
         { field: 'role', headerName: 'Role', flex: 1 },
         {
-          field: 'created',
+          field: 'created_at',
           headerName: 'Created On',
           flex: 1,
         },
         {
-          field: 'lastloggedin',
+          field: 'last_login',
           headerName: 'Last Logged In',
           flex: 1,
+          renderCell: (params) => (params.value != null) ? params.value : "Null"
         },
         {
           field: 'action',
@@ -52,14 +71,11 @@ function Users() {
           renderCell: (params) => {
             return (
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <CreateIcon className="userListEdit" />
-
-                <DeleteOutlineIcon
+                 <DeleteOutlineIcon
                   style={{ margin: '0 15px' }}
                   className="userListDelete"
                   onClick={() => handleDelete(params.row.id)}
                 />
-                <VisibilityIcon className="userListVisible" />
               </div>
             );
           },
@@ -79,17 +95,12 @@ function Users() {
                   type="text"
                   className="content__SearchBarInput"
                   placeholder="Search"
+                  value={word}
+                  onChange={(e) => setWord(e.target.value)}
                 />
                 <button type="submit">submit</button>
               </form>
-              <MyModal
-                modalSelectName="Select a User Role"
-                modalSelectTitle="Role"
-                modalButtonName="Add User"
-                modalTitle="Add User"
-                isSelectPresent
-                autoHeight={true}
-              />
+              <UsersModal/>
             </div>
           </div>
 
@@ -99,7 +110,7 @@ function Users() {
               disableSelectionOnClick
               columns={columns}
               pageSize={10}
-              checkboxSelection
+              checkboxSelection={false}
             />
           </div>
         </div>
