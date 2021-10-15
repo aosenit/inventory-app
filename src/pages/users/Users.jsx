@@ -9,22 +9,24 @@ import { useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 import {  userRequest } from '../../apiRequests';
 import UsersModal from '../../modals/UsersModal';
+import { CircularProgress } from '@material-ui/core';
 
 function Users() {
 
       const [data, setData] = useState(userRows);
       const [word, setWord] = useState('');
+      const [loading, setLoading] = useState(false)
 
       useEffect(() => {
         const getUsers = async() => {
-            
+           setLoading(true) 
          try {
            const res =  await userRequest.get(`/user/users?page=1&keyword=${word}`)
            const users = (res.data.results)
            setData(users)
-           
+           setLoading(false)
          } catch (error) {
-      
+          setLoading(false)
            console.log(error.response)
          } 
      
@@ -81,6 +83,11 @@ function Users() {
           },
         },
       ];
+
+      if (loading){
+        return <CircularProgress color="inherit" />
+      }
+
     return (
       <div className="users layout">
         <Topbar />
@@ -111,6 +118,7 @@ function Users() {
               columns={columns}
               pageSize={10}
               checkboxSelection={false}
+              rowsPerPageOptions={[5]}
             />
           </div>
         </div>

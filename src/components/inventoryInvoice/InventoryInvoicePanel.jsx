@@ -5,25 +5,28 @@ import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import { userRequest } from '../../apiRequests';
 import { useDispatch } from 'react-redux';
-import { receipt } from '../../redux/userSlice';
+import { receipt } from '../../redux/invoiceSlice';
+import { CircularProgress } from '@material-ui/core';
 
 function InventoryInvoicePanel({ word}) {
   
   const dispatch = useDispatch()
   const [data, setData] = useState(inventorypanelRows);
+  const [loading, setLoading] = useState(false)
  
   
   useEffect(() => {
     const getNewInvoice = async() => {   
+     setLoading(true)
      try {
        const res =  await userRequest.get(`/app/inventory?page=1&keyword=${word}`)
        const newInvoice = (res.data.results)
        setData(newInvoice) 
-       
+       setLoading(false)
       
        
      } catch (error) {
-  
+      setLoading(false)
        console.log(error.response)
      } 
  
@@ -37,10 +40,13 @@ function InventoryInvoicePanel({ word}) {
     const reciept = data.filter((item) => item.id === id);
     const recieptData = {
       name: reciept[0].name,
-      price: reciept[0].price
+      price: reciept[0].price,
+      id: reciept[0].code,
+      qty: 1, 
+      remaining: reciept[0].remaining,
     }
     dispatch(receipt(recieptData))
-    
+
    }
 
 
@@ -85,7 +91,6 @@ function InventoryInvoicePanel({ word}) {
               variant="contained"
               onClick={() => handleAdd(params.row.id)}
               style={{
-                color: 'white',
                 color: 'var(--darkGreen)',
                 fontSize: '.75rem',
                 backgroundColor:'var(--lightGreen)'
@@ -98,6 +103,12 @@ function InventoryInvoicePanel({ word}) {
       },
     },
   ];
+
+  if (loading){
+    return <CircularProgress color="inherit" />
+  }
+
+ 
   return (
     <div className="contentTable">
       <DataGrid

@@ -90,7 +90,7 @@ const GroupModal = () => {
                             </CardContent>
                         </Card>
                     
-                        <Button className="cardBtn" onClick="" variant="outlined" color="primary">Print</Button>
+                        <Button className="cardBtn" variant="outlined" color="primary">Print</Button>
                     </div>
                     </div>
                 </Box>

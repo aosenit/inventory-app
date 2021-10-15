@@ -2,27 +2,25 @@ import React, { useEffect } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import { DataGrid } from '@mui/x-data-grid';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import { shopRows } from '../../DemoData';
 import { useState } from 'react';
-import SearchIcon from '@material-ui/icons/Search';
-import MyModal from '../../Modal';
 import { userRequest } from '../../apiRequests';
+import { CircularProgress } from '@material-ui/core';
 
 function UserActivity() {
   const [data, setData] = useState(shopRows);
-  
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getUserActivity = async() => {
-        
+      setLoading(true)  
      try {
        const res =  await userRequest.get("/user/activity-log")
        const userActivity = (res.data.results)
        setData(userActivity)
-       
+       setLoading(false)
      } catch (error) {
-  
+        setLoading(false)
        console.log(error.response)
      } 
  
@@ -45,6 +43,11 @@ function UserActivity() {
     
   
   ];
+
+  if (loading){
+    return <CircularProgress color="inherit" />
+  }
+
   return (
     <div className="user-activity layout">
       <Topbar />
@@ -61,6 +64,7 @@ function UserActivity() {
             columns={columns}
             pageSize={10}
             checkboxSelection={false}
+            rowsPerPageOptions={[5]}
           />
         </div>
       </div>

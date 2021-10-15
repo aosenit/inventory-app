@@ -10,21 +10,24 @@ import CreateIcon from '@material-ui/icons/Create';
 import SearchIcon from '@material-ui/icons/Search';
 import { userRequest } from '../../apiRequests';
 import ShopModal from '../../modals/ShopModal';
+import { CircularProgress } from '@material-ui/core';
 
 function Shop() {
   const [data, setData] = useState(shopRows);
   const [word, setWord] = useState('');
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getShops = async() => {
-        
+       setLoading(true) 
      try {
        const res =  await userRequest.get(`/app/shop?page=1&keyword=${word}`)
        const shops = (res.data.results)
        setData(shops)
+       setLoading(false)
        
      } catch (error) {
-  
+      setLoading(false)
        console.log(error.response)
      } 
  
@@ -77,6 +80,11 @@ function Shop() {
       },
     },
   ];
+
+  if (loading){
+    return <CircularProgress color="inherit" />
+  }
+
   return (
     <div className="shop layout">
       <Topbar />
@@ -107,6 +115,7 @@ function Shop() {
             columns={columns}
             pageSize={10}
             checkboxSelection={false}
+            rowsPerPageOptions={[5]}
           />
         </div>
       </div>

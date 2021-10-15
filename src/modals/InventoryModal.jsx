@@ -1,21 +1,22 @@
-import { Box, Button, IconButton, Modal, TextField, Typography } from '@material-ui/core'
+import { Box, Button, IconButton, Modal, TextField } from '@material-ui/core'
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 
-const InventoryModal = ({}) => {
+const InventoryModal = () => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { register, handleSubmit, reset} = useForm();
+  
 
   const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
-    transform: 'translate(-50%, -50%)',
+    transform: `translate(${50}px, ${50}px)`,
     width: 500,
     bgcolor: 'background.paper',
     p: 5,
@@ -90,7 +91,7 @@ const InventoryModal = ({}) => {
                                 position: 'absolute',
                                 left: '-50%',
                                 top: '50%',
-                                transform: 'translate(${50}px, ${50}px)',
+                                transform: `translate(${50}px, ${50}px)`,
                             }}
                             accept="image/*"
                             className=""

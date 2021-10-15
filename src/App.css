@@ -111,3 +111,32 @@
     width: 10rem !important;
     margin-top: 10px !important;
 }
+
+.newInvoiceHeader, .newInvoiceContent{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    place-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid gray;
+}
+
+.newInvoiceHeader{
+    background-color: var(--lightColor);
+}
+
+.receiptInput{
+    display: flex;
+    align-items: center
+}
+
+.receiptInput input{
+    width: 3rem;
+    padding: 2px;
+    margin-right: .5rem;
+}
+
+.total{
+    font-size: .9rem;
+    text-align: center;
+    padding: .5rem 0;
+}

@@ -4,9 +4,13 @@ import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 import userReducer from "./userSlice";
+import invoiceReducer from "./invoiceSlice";
+
 const reducers = combineReducers({
   user: userReducer,
+  invoice: invoiceReducer,
 });
+
 const persistConfig = {
   key: "root",
   storage,

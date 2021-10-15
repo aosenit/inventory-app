@@ -8,21 +8,24 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import { userRequest } from '../../apiRequests';
 import InventoryModal from '../../modals/InventoryModal';
+import { CircularProgress } from '@material-ui/core';
+// import moment from "moment";
 
 function InventoryManager() {
   const [data, setData] = useState(inventoryRows);
   const [word, setWord] = useState('');
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
    const getInventory = async() => {
-       
+       setLoading(true)
     try {
       const res =  await userRequest.get(`/app/inventory?page=1&keyword=${word}`)
       const inventorydata = (res.data.results)
       setData(inventorydata)
-      
+      setLoading(false)
     } catch (error) {
- 
+      setLoading(false)
       console.log(error.response)
     } 
 
@@ -107,6 +110,10 @@ function InventoryManager() {
        },
      ];
 
+     if (loading){
+      return <CircularProgress color="inherit" />
+    }
+
     return (
       <div className="main" style={{ background: 'white', margin: '20px' }}>
         <div className="content__leftTop">
@@ -142,6 +149,7 @@ function InventoryManager() {
             headerHeight={80}
             className="editTable"
             autoHeight={true}
+            rowsPerPageOptions={[]}
           />
         </div>
       </div>

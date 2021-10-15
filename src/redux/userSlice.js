@@ -7,7 +7,6 @@ export const userSlice = createSlice({
     isFetching: false,
     isError: false,
     publicUser: null,
-    invoiceDetail: [],
   },
 
   reducers: {
@@ -36,27 +35,11 @@ export const userSlice = createSlice({
     publicUser: (state, action) => {
       state.publicUser = action.payload;
     },
-
-    receipt: (state, action) => {
-      state.invoiceDetail.push([action.payload]);
-    },
-
-    clearReceipt: (state) => {
-      // state.invoiceDetail = [];
-      state.invoiceDetail.length = 0;
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  logout,
-  publicUser,
-  receipt,
-  clearReceipt,
-} = userSlice.actions;
+export const { loginStart, loginSuccess, loginFailure, logout, publicUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;

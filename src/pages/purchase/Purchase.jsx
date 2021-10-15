@@ -7,22 +7,24 @@ import { purchaseRows } from '../../DemoData';
 import SearchIcon from '@material-ui/icons/Search';
 import PurchaseModal from '../../modals/PurchaseModal';
 import { publicRequest } from '../../apiRequests';
+import { CircularProgress } from '@material-ui/core';
 
 
 function Purchase() {
   const [data, setData] = useState(purchaseRows);
   const [word, setWord] = useState('');
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const getPurchase = async() => {
-        
+      setLoading(true)  
      try {
       const res =  await publicRequest.get(`/app/inventory?page=1&keyword=${word}`)
        const purchase = (res.data.results)
        setData(purchase)
-       
+       setLoading(false)
      } catch (error) {
-  
+      setLoading(false)
        console.log(error.response)
      } 
  
@@ -67,21 +69,16 @@ function Purchase() {
         return (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <PurchaseModal />
-            {/* <Button
-              variant="contained"
-              style={{
-                color: 'white',
-                backgroundColor: 'var(--darkGreen)',
-                fontSize: '.75rem',
-              }}
-            >
-              View Receipt
-            </Button> */}
           </div>
         );
       },
     },
   ];
+
+  if (loading){
+    return <CircularProgress color="inherit" />
+  }
+
   return (
     <div className="purchase layout">
       <Topbar />
@@ -112,6 +109,7 @@ function Purchase() {
             headerHeight={70}
             className="editTable"
             autoHeight={true} 
+            rowsPerPageOptions={[5]}
           />
         </div>
       </div>

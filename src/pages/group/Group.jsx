@@ -10,24 +10,27 @@ import CreateIcon from '@material-ui/icons/Create';
 import SearchIcon from '@material-ui/icons/Search';
 import { userRequest } from '../../apiRequests';
 import GroupModal from '../../modals/GroupModal';
+import { CircularProgress } from '@material-ui/core';
 
 
 function Group() {
   const [data, setData] = useState(groupRows);
   const [word, setWord] = useState('');
+  const [loading, setLoading] = useState(false)
 
 
   useEffect(() => {
    const getGroup = async() => {
-       
+       setLoading(true)
     try {
       const res =  await userRequest.get(`/app/group?page=1&keyword=${word}`)
       // console.log( res.data.results)
       const group = (res.data.results)
       setData(group)
+      setLoading(false)
       
     } catch (error) {
- 
+      setLoading(false)
       console.log(error.response)
     } 
 
@@ -84,6 +87,12 @@ function Group() {
       },
     },
   ];
+
+
+  if (loading){
+    return <CircularProgress color="inherit" />
+  }
+
   return (
     <div className="shop layout">
       <Topbar />
@@ -113,6 +122,7 @@ function Group() {
             disableSelectionOnClick
             columns={columns}
             pageSize={10}
+            rowsPerPageOptions={[5]}
             checkboxSelection={false}
             autoHeight={true}
           />

@@ -1,78 +1,75 @@
 import React, { useEffect } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { invoiceRows } from '../../DemoData';
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import ClearIcon from '@material-ui/icons/Clear';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearReceipt } from '../../redux/userSlice';
+import { Card, CardContent, CircularProgress } from '@material-ui/core';
+import { clearReceipt, deleteReceipt } from '../../redux/invoiceSlice';
 
 function InvoicePanel() {
-  const [data, setData] = useState(invoiceRows);
-  const {invoiceDetail} = useSelector(state => state.user)
+  const [data, setData] = useState([]);
+  const {invoiceDetail} = useSelector(state => state.invoice)
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+   
+
+   const handleClear = () => {
+    dispatch(clearReceipt())
+}
+
+  const getTotalPrice = () => {
+    return data.reduce(
+      (accumulator, item) => accumulator + (item.price * item.qty),
+      0
+    );
   };
+  useEffect(() => {
+    setLoading(true)
+    setData(invoiceDetail)
+    setLoading(false)
+  }, [invoiceDetail], clearReceipt, deleteReceipt, getTotalPrice())
 
-  const handleClear = () => {
-      dispatch(clearReceipt())
+ 
+  if (loading){
+    return <CircularProgress color="inherit" />
   }
 
-  useEffect(() => {
-    // console.log(invoiceDetail, invoiceRows)
-    // setData(invoiceDetail)
-    
-  }, [clearReceipt()])
 
-  const columns = [
-    {
-      field: 'item',
-      headerName: 'Item',
-      flex: 1,
-    },
-    {
-      field: 'unitprice',
-      headerName: 'Unit Price',
-      flex: 1,
-    },
-    {
-      field: 'qty',
-      headerName: 'Qty',
-      flex: .5,
-    },
-    {
-      field: 'amount',
-      headerName: 'Amount',
-      flex: 1.2,
-      renderCell: (params) => {
-        return (
-          <div style={{ display:'flex', alignItems: 'center'}}>
-           {params.row.amount}
-            <ClearIcon 
-            style={{color:'red', marginLeft:'12px', cursor:'pointer'}}
-            onClick={() => handleDelete(params.row.id)}
-            />
-          </div>
-        );
-      },
-    },
-  ];
   return (
     <div className="contentTable">
-      <DataGrid
-        rows={data}
-        columns={columns}
-        pageSize={10}
-        checkboxSelection={false}
-        headerHeight={70}
-        className="editTable"
-        autoHeight={true}
-        hideFooter
-      />
+      <Card>
+        <CardContent>
+          <div className="newInvoiceHeader">
+            <h5>Item</h5>
+            <h5>Qty</h5>
+            <h5>Price</h5>
+            <h5>Total</h5>
+            <h5>Action</h5>
+          </div>
 
+          {data && data.map((d, i) => {
+            return (
+              <div className="newInvoiceContent" key={d.id}>
+               
+                <h5>{d.name}</h5>
+                <h5>{d.qty}</h5>
+                <h5>NGN {d.price}</h5>
+                <h5>NGN {(d.qty) * (d.price)}</h5>
+                <h5 className="receiptInput">
+                  <ClearIcon color="secondary" onClick={() => dispatch(deleteReceipt(d.id))}/>
+                </h5>
+                <br /> 
+                
+            </div>
+            )
+          })}
+
+          
+        </CardContent>
+      </Card>
+      <h2 className="total">Grand Total: NGN {getTotalPrice()}</h2>
       <Paper className="invoiceFooter" 
       style={{
           display:'flex', 

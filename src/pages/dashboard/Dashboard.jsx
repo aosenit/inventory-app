@@ -2,7 +2,6 @@ import React from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
 import Topbar from '../../components/topbar/Topbar';
 import './Dashboard.css'
-import { useState } from 'react';
 import Paper from '@material-ui/core/Paper';
 import Barchart from '../../components/charts/Barchart';
 import Piechart from '../../components/charts/Piechart';
@@ -13,10 +12,7 @@ import DashboardTopselling from '../../components/dashboardcomponents/DashboardT
 
 
 export default function Dashboard() {
-    const [month, setMonth] = useState('The Month');
-    const handleChange = (event) => {
-      setMonth(event.target.value);
-    };
+    
 
 
   return (

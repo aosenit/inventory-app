@@ -8,7 +8,6 @@ import InsertDriveFileIcon from '@material-ui/icons/InsertDriveFile';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import ShopIcon from '@material-ui/icons/Shop';
 import Navbar from '../navbar/Navbar';
-import UserActivity from '../../pages/userActivity/UserActivity';
 
 function Sidebar() {
   return (
