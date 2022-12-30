@@ -5,7 +5,7 @@ import "./Purchase.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { purchaseRows } from "../../DemoData";
 import SearchIcon from "@material-ui/icons/Search";
-import PurchaseModal from "../../modals/PurchaseModal";
+// import PurchaseModal from "../../modals/PurchaseModal";
 import { publicRequest } from "../../apiRequests";
 import { CircularProgress } from "@material-ui/core";
 

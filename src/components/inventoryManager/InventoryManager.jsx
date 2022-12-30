@@ -7,7 +7,6 @@ import CreateIcon from "@material-ui/icons/Create";
 import SearchIcon from "@material-ui/icons/Search";
 import Button from "@material-ui/core/Button";
 import { userRequest } from "../../apiRequests";
-import InventoryModal from "../../modals/InventoryModal";
 import { CircularProgress } from "@material-ui/core";
 // import moment from "moment";
 

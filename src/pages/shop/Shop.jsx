@@ -9,7 +9,7 @@ import { useState } from "react";
 import CreateIcon from "@material-ui/icons/Create";
 import SearchIcon from "@material-ui/icons/Search";
 import { userRequest } from "../../apiRequests";
-import ShopModal from "../../modals/ShopModal";
+// import ShopModal from "../../modals/ShopModal";
 import { CircularProgress } from "@material-ui/core";
 
 function Shop() {

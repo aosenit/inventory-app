@@ -16,7 +16,6 @@ import UpdatePassword from "./pages/createUser/UpdatePassword";
 import UserActivity from "./pages/userActivity/UserActivity";
 import LoginUserPage from "./pages/users/LoginUserPage";
 import CreateUserPage from "./pages/createUser/CreateUserPage";
-import Layouts from "./components/mainbar/LayoutBar";
 
 function App({ children }) {
   return (
