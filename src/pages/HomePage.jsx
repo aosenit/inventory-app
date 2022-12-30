@@ -1,30 +1,20 @@
-import React from 'react'
+import React from "react";
+import "./HomePage.css";
+import LoginPage from "./LoginPage";
+import CreateUser from "./createUser/CreateUser";
 
-import { Link } from 'react-router-dom'
-
-import "./HomePage.css"
-
-
-
-const HomePage = () => {
- 
-
-
-
-    return (
-        <div className="home">
-            <div className="homeTexts">
-                <h1>THE INVENTORY APP</h1>
-                  <div className="homeRoutes">
-                  <Link className="homeLink"  to='/login'>Login</Link>
-                  <Link className="homeLink" to='/create-user'>Sign up</Link> 
-                  </div>
-            </div>
-
-         
-            <div className="backCover"></div>
+const HomePage = ({ isLogin = true }) => {
+  return (
+    <div className="home">
+      <div className="homeTexts">
+        <div className="homeRoutes">
+          {isLogin ? <LoginPage /> : <CreateUser />}
         </div>
-    )
-}
+      </div>
 
-export default HomePage
+      <div className="backCover"></div>
+    </div>
+  );
+};
+
+export default HomePage;

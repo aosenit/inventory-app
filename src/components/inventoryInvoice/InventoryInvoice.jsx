@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
-import './InventoryInvoice.css'
-import SearchIcon from '@material-ui/icons/Search';
-import InventoryInvoicePanel from './InventoryInvoicePanel';
-import InvoicePanel from './InvoicePanel';
-import Topbar from '../topbar/Topbar';
-import Sidebar from '../sidebar/Sidebar';
+import React, { useState } from "react";
+import "./InventoryInvoice.css";
+import SearchIcon from "@material-ui/icons/Search";
+import InventoryInvoicePanel from "./InventoryInvoicePanel";
+import InvoicePanel from "./InvoicePanel";
+import Topbar from "../topbar/Topbar";
+import Sidebar from "../sidebar/Sidebar";
 function InventoryInvoice() {
-  const  [word, setWord] = useState('');
-  
-    return (
-      <div className="inventory layout">
+  const [word, setWord] = useState("");
+
+  return (
+    <div className="inventory layout">
       <Topbar />
       <Sidebar />
       <div className="main inventoryInvoice">
@@ -23,28 +23,25 @@ function InventoryInvoice() {
                   type="text"
                   className="content__SearchBarInput"
                   placeholder="Search"
-                  value = {word}
-                  onChange ={(e) => setWord(e.target.value)}
-                  
+                  value={word}
+                  onChange={(e) => setWord(e.target.value)}
                 />
                 <button type="submit">submit</button>
               </form>
             </div>
           </div>
-        <InventoryInvoicePanel word = {word}/>
+          <InventoryInvoicePanel word={word} />
         </div>
 
         <div className="inventoryInvoiceRight">
           <div className="content__leftTop">
             <h4>Invoice</h4>
-           
           </div>
           <InvoicePanel />
         </div>
       </div>
     </div>
-      
-    );
+  );
 }
 
-export default InventoryInvoice
+export default InventoryInvoice;

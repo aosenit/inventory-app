@@ -1,37 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap");
 
-:root{
-  --btnColor: #4451C2;
+:root {
+  --btnColor: #4451c2;
   --primaryColor: #fff;
   --grayColor: rgb(145, 143, 143);
   --darkGreen: #269962;
-  --lightGreen:rgba(140, 255, 179, 0.29);
+  --lightGreen: rgba(140, 255, 179, 0.29);
   --lightColor: rgb(240, 238, 238);
 }
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-body{
-  font-family: 'Open Sans', sans-serif;
+body {
+  font-family: "Open Sans", sans-serif;
   max-width: 2400px;
   background-color: var(--lightColor);
   min-width: 500px;
   margin: auto;
 }
 
-img{
+img {
   width: 100%;
 }
 
-li{
+li {
   list-style-type: none;
 }
 
-a{
+a {
   text-decoration: none;
   color: inherit;
 }
-

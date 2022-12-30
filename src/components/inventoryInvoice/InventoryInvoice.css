@@ -1,17 +1,13 @@
-.inventoryInvoice{
-    display: grid;
-    grid-template-columns:1fr .6fr;
-    grid-column-gap: 20px;
+.inventoryInvoice {
+  display: grid;
+  grid-template-columns: 1fr 0.6fr;
+  grid-column-gap: 20px;
 }
 
-.inventoryInvoiceLeft{
-   
-    background-color: var(--primaryColor);
-
+.inventoryInvoiceLeft {
+  background-color: var(--primaryColor);
 }
 
-.inventoryInvoiceRight{
-   
-    background-color: var(--primaryColor);
+.inventoryInvoiceRight {
+  background-color: var(--primaryColor);
 }
-

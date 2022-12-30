@@ -6,9 +6,7 @@ import Users from "./pages/users/Users";
 import Dashboard from "./pages/dashboard/Dashboard";
 import "./App.css";
 import Purchase from "./pages/purchase/Purchase";
-import LoginPage from "./pages/LoginPage";
 import SelectShop from "./pages/SelectShop";
-import CreateUser from "./pages/createUser/CreateUser";
 import HomePage from "./pages/HomePage";
 import PublicRoute from "./routesFolder/PublicRoute";
 import PrivateRoute from "./routesFolder/PrivateRoute";
@@ -16,13 +14,21 @@ import InventoryInvoice from "./components/inventoryInvoice/InventoryInvoice";
 import Loading from "./pages/Loading";
 import UpdatePassword from "./pages/createUser/UpdatePassword";
 import UserActivity from "./pages/userActivity/UserActivity";
+import LoginUserPage from "./pages/users/LoginUserPage";
+import CreateUserPage from "./pages/createUser/CreateUserPage";
+import Layouts from "./components/mainbar/LayoutBar";
 
 function App({ children }) {
   return (
     <div className="app">
       <Router>
         <Switch>
-          <PublicRoute restricted={false} component={HomePage} path="/" exact />
+          <PublicRoute
+            restricted={false}
+            component={HomePage}
+            path="/login"
+            exact
+          />
           <PublicRoute
             restricted={true}
             component={Loading}
@@ -39,13 +45,13 @@ function App({ children }) {
 
           <PublicRoute
             restricted={true}
-            component={LoginPage}
+            component={LoginUserPage}
             path="/login"
             exact
           />
           <PublicRoute
             restricted={true}
-            component={CreateUser}
+            component={CreateUserPage}
             path="/create-user"
             exact
           />

@@ -1,142 +1,215 @@
-
-.layout{
-    width: 100%;
-    background-color: var(--lightColor);
-    display: grid;
-      grid-template-areas: "side head"
-                           "side  main";
+.layout {
+  width: 100%;
+  background-color: var(--lightColor);
+  display: grid;
+  grid-template-areas:
+    "side head"
+    "side  main";
   grid-template-rows: 100px 1fr;
   grid-template-columns: 300px 1fr;
-
-  
 }
 
-.sidebar{
-    grid-area: side;
-      display: flex;
-      flex-direction: column;
-      padding-left: 30px;
-      background-color: var(--primaryColor);
-     position: relative;
-     height: 100vh;
-     position: sticky;
-     top: 0;
+.sidebar {
+  grid-area: side;
+  display: flex;
+  flex-direction: column;
+  padding-left: 30px;
+  background-color: var(--primaryColor);
+  position: relative;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 }
-.topbar{
-    grid-area: head;
-     background-color: #fff;
-     width: 100%;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
-     padding: 0 30px;
-    border-left:solid 1px var(--lightColor);
-    position: sticky;
-    top: 0;
-    z-index: 999;
-}
-
-.main{
-    grid-area: main;
-    background-color:var(--lightColor);
-    margin-top: 20px;
-    font-size: 14px;
+.topbar {
+  grid-area: head;
+  background-color: #fff;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  border-left: solid 1px var(--lightColor);
+  position: sticky;
+  top: 0;
+  z-index: 999;
 }
 
-.MuiDataGrid-root .MuiDataGrid-columnHeader, .MuiDataGrid-root .MuiDataGrid-cell{
-    padding: 0 20px !important;
+.main {
+  grid-area: main;
+  background-color: var(--lightColor);
+  margin-top: 20px;
+  font-size: 14px;
 }
 
-.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle{
-    font-weight: bold !important;
+.MuiDataGrid-root .MuiDataGrid-columnHeader,
+.MuiDataGrid-root .MuiDataGrid-cell {
+  padding: 0 20px !important;
 }
 
-.cardHead{
-    text-align: center;
+.MuiDataGrid-root .MuiDataGrid-columnHeaderTitle {
+  font-weight: bold !important;
 }
-.cardHead > h3{
-    color: blue;
-    margin-bottom: 10px;
-    word-spacing: .5rem;
+
+.MuiDataGrid-cell:focus-within {
+  outline: none !important;
 }
-.cardHead > h5{
-    margin-top: 10px;
+
+.cardHead {
+  text-align: center;
+}
+.cardHead > h3 {
+  color: blue;
+  margin-bottom: 10px;
+  word-spacing: 0.5rem;
+}
+.cardHead > h5 {
+  margin-top: 10px;
 }
 
 .cardBody_top {
-    display: flex;
-    justify-content: space-between;
-    font-size: .8rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
 }
 
 .cardBody_top span {
-    display: block;
-    color: black;
-    font-size: .8rem;
-    margin: 5px 0 10px;
+  display: block;
+  color: black;
+  font-size: 0.8rem;
+  margin: 5px 0 10px;
 }
 
-.cardBody_Content{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 5px;
-    color: gray;
-    margin-bottom: 10px;
-    border-top: 1px solid gray;
-    border-bottom: 1px solid gray;
+.cardBody_Content {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 5px;
+  color: gray;
+  margin-bottom: 10px;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
 }
 
-.cardBody_Content span{
-    display: block;
-    color: black;
+.cardBody_Content span {
+  display: block;
+  color: black;
 }
 
-.cardBody_footer{
-    display: flex;
-    font-size: .8rem;
-    flex-direction: column;
+.cardBody_footer {
+  display: flex;
+  font-size: 0.8rem;
+  flex-direction: column;
 }
 
-.cardBody_footer >h4{
-    align-self: flex-end;
-    margin-bottom: 20px;
+.cardBody_footer > h4 {
+  align-self: flex-end;
+  margin-bottom: 20px;
 }
-.cardBody_footer >h5{
-    align-self: center;
-    font-size: .9rem;
-    margin-bottom: 10px;
-}
-
-.cardBtn{
-    width: 10rem !important;
-    margin-top: 10px !important;
+.cardBody_footer > h5 {
+  align-self: center;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
 }
 
-.newInvoiceHeader, .newInvoiceContent{
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    place-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid gray;
+.cardBtn {
+  width: 10rem !important;
+  margin-top: 10px !important;
 }
 
-.newInvoiceHeader{
-    background-color: var(--lightColor);
+.newInvoiceHeader,
+.newInvoiceContent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  place-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid gray;
 }
 
-.receiptInput{
-    display: flex;
-    align-items: center
+.newInvoiceHeader {
+  background-color: var(--lightColor);
 }
 
-.receiptInput input{
-    width: 3rem;
-    padding: 2px;
-    margin-right: .5rem;
+.receiptInput {
+  display: flex;
+  align-items: center;
 }
 
-.total{
-    font-size: .9rem;
-    text-align: center;
-    padding: .5rem 0;
+.receiptInput input {
+  width: 3rem;
+  padding: 2px;
+  margin-right: 0.5rem;
+}
+
+.total {
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 0.5rem 0;
+}
+
+.loginContainer {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  background-color: whitesmoke;
+  padding: 1rem 0;
+  color: black;
+}
+
+.loginHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 300px;
+  margin-bottom: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 250px;
+}
+
+label {
+  margin: 10px 0 5px 0;
+}
+
+.formGroup {
+  width: 300px;
+  display: grid;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+input,
+select {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+button[type="submit"] {
+  width: 100%;
+  height: 40px;
+  background-color: #00e85d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+button[type="submit"]:hover {
+  background-color: hsl(144, 100%, 55%);
+}
+
+.loginDiv {
+  font-size: 12px;
+}
+
+.loginDiv .login {
+  color: blue;
 }

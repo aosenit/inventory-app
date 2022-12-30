@@ -1,15 +1,15 @@
-import React from 'react';
-import Sidebar from '../sidebar/Sidebar';
-import Topbar from '../topbar/Topbar';
+import React from "react";
+import Sidebar from "../sidebar/Sidebar";
+import Topbar from "../topbar/Topbar";
 
-const Layout =({children}) =>{
-    return(
-        <>
-            <Topbar/>
-            <Sidebar/>
-           <main>{children}</main>
-        </>
-    )
-}
+const Layouts = ({ children }) => {
+  return (
+    <>
+      <Topbar />
+      <Sidebar />
+      <main>{children}</main>
+    </>
+  );
+};
 
-export default Layout;
+export default Layouts;
