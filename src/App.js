@@ -22,12 +22,7 @@ function App({ children }) {
     <div className="app">
       <Router>
         <Switch>
-          <PublicRoute
-            restricted={false}
-            component={HomePage}
-            path="/login"
-            exact
-          />
+          <PublicRoute restricted={false} component={HomePage} path="/" exact />
           <PublicRoute
             restricted={true}
             component={Loading}
